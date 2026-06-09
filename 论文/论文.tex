@@ -1,0 +1,133 @@
+\PassOptionsToPackage{quiet}{xeCJK}
+\documentclass[withoutpreface,bwprint]{format}
+\usepackage{etoolbox}
+\usepackage{ctex}
+\BeforeBeginEnvironment{tabular}{\zihao{-5}}
+% 参考文献改用纯tex格式，不再需要natbib+bibtex
+\usepackage[framemethod=TikZ]{mdframed}
+\usepackage{url}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{longtable}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+
+\renewcommand{\textbf}[1]{{\song\bfseries #1}}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\tikzset{
+  box/.style={rectangle, draw, minimum width=3.2cm, minimum height=0.9cm, align=center},
+  arrow/.style={thick, -{Stealth}}
+}
+
+
+
+
+
+
+% 定义新命令
+\makeatletter
+\newcommand{\teamcode}[1]{\def\@teamcode{#1}}  % 队伍编号
+\newcommand{\problemnumber}[1]{\def\@problemnumber{#1}}  % 题号
+
+\renewcommand{\maketitle}{%
+	\begin{center}
+		% 表格尺寸设置说明：
+		% arraystretch 控制表格行高（默认值为1，大于1会增加行高）
+		% tabcolsep 控制单元格左右边距（默认值约为6pt）
+		% 表格总宽度通过 p{} 来控制（可以用cm或em为单位）
+		\renewcommand{\arraystretch}{6}  % 调整这个值可以改变表格行高
+		\setlength{\tabcolsep}{30pt}  % 调整这个值可以改变表格左右边距
+		{\zihao{5}  % 设置表格中的字体为五号
+			\begin{tabular}{|c|c|}
+				\hline
+				队伍编号 & \@teamcode \\
+				\hline
+				题号 & \@problemnumber \\
+				\hline
+			\end{tabular}
+		}
+		
+		
+		\vspace{0.5cm}  % 表格到横线的距离
+		
+		% 添加论文题目上方的横线，宽度与正文相同
+		\rule{\textwidth}{1pt}  % 横线宽度设置为\textwidth，粗细增加到1pt
+		\vspace{-0.5cm}  % 横线到论文题目的距离
+		
+		% 论文题目：宋体四号
+		{\zihao{4}\songti\bfseries \@title}
+		
+	\end{center}
+}
+\makeatother
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% 设置默认值
+\teamcode{MCxxxxxxx}  % 队伍编号
+\problemnumber{C}  % 题号
+
+
+
+
+
+
+
+
+\title{论文标题}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 正文
+\begin{document}
+
+% 封面和目录页不显示页码
+\pagenumbering{gobble}
+\maketitle
+
+\input{0.摘要.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{-1.4cm}
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagenumbering{arabic}
+\vspace{-1.4cm}
+
+\input{1.引言.tex}
+
+\input{2.总体分析.tex}
+
+\input{3.模型假设.tex}
+
+\input{4.符号说明.tex}
+
+\input{5.模型的建立与求解.tex}
+
+\input{6.模型检验.tex}
+
+\input{7.模型评价.tex}
+
+\input{8.模型改进推广.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 参考文献
+\newpage
+\input{9.参考文献.tex}
+
+
+\newpage
+\input{10.附录.tex}
+
+
+\end{document}
